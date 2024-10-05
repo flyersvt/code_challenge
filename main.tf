@@ -110,9 +110,10 @@ resource "aws_route_table_association" "public_subnet_assn_3" {
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami           = var.instance_ami_id
-  instance_type = var.instance_type
-  subnet_id     = aws_subnet.public_1.id
+  ami                    = var.instance_ami_id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.public_1.id
+  vpc_security_group_ids = ["${aws_security_group.code_challenge.id}"]
 
   tags = {
     Name = var.instance_name

@@ -12,64 +12,64 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_1" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr_1
-  availability_zone       = var.public_subnet_az_1
+  cidr_block              = var.public_subnets["key1"].cidr
+  availability_zone       = var.azs["key1"]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnet_name_1
+    Name = var.public_subnets["key1"].name
   }
 }
 
 resource "aws_subnet" "public_2" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr_2
-  availability_zone       = var.public_subnet_az_2
+  cidr_block              = var.public_subnets["key2"].cidr
+  availability_zone       = var.azs["key2"]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnet_name_2
+    Name = var.public_subnets["key2"].name
   }
 }
 
 resource "aws_subnet" "public_3" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr_3
-  availability_zone       = var.public_subnet_az_3
+  cidr_block              = var.public_subnets["key3"].cidr
+  availability_zone       = var.azs["key3"]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnet_name_3
+    Name = var.public_subnets["key3"].name
   }
 }
 
 resource "aws_subnet" "private_1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr_1
-  availability_zone = var.private_subnet_az_1
+  cidr_block        = var.private_subnets["key1"].cidr
+  availability_zone = var.azs["key1"]
 
   tags = {
-    Name = var.private_subnet_name_1
+    Name = var.private_subnets["key1"].name
   }
 }
 
 resource "aws_subnet" "private_2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr_2
-  availability_zone = var.private_subnet_az_2
+  cidr_block        = var.private_subnets["key2"].cidr
+  availability_zone = var.azs["key2"]
 
   tags = {
-    Name = var.private_subnet_name_2
+    Name = var.private_subnets["key2"].name
   }
 }
 
 resource "aws_subnet" "private_3" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr_3
-  availability_zone = var.private_subnet_az_3
+  cidr_block        = var.private_subnets["key3"].cidr
+  availability_zone = var.azs["key3"]
 
   tags = {
-    Name = var.private_subnet_name_3
+    Name = var.private_subnets["key3"].name
   }
 }
 

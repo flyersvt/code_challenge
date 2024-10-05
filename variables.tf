@@ -141,3 +141,15 @@ variable "private_subnet_name_3" {
   type        = string
   default     = "Private 3"
 }
+
+variable "internet_gateway_name" {
+  description = "Internet gateway name"
+  type        = string
+  default     = "Internet Gateway"
+}
+
+variable "public_route_table_name" {
+  description = "Public route table name"
+  type        = string
+  default     = "Public Route Table"
+}

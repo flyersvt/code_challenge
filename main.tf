@@ -108,3 +108,13 @@ resource "aws_route_table_association" "public_subnet_assn_3" {
   subnet_id      = aws_subnet.public_3.id
   route_table_id = aws_route_table.public_route_table.id
 }
+
+resource "aws_instance" "ec2_instance" {
+  ami           = var.instance_ami_id
+  instance_type = var.instance_type
+  subnet_id     = aws_subnet.public_1.id
+
+  tags = {
+    Name = var.instance_name
+  }
+}

@@ -153,3 +153,21 @@ variable "public_route_table_name" {
   type        = string
   default     = "Public Route Table"
 }
+
+variable "instance_name" {
+  description = "EC2 instance name"
+  type        = string
+  default     = "NGINX"
+}
+
+variable "instance_ami_id" {
+  description = "EC2 instance AMI ID"
+  type        = string
+  default     = "ami-0ea3c35c5c3284d82"
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t2.micro"
+}

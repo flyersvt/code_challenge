@@ -10,66 +10,28 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public_1" {
+resource "aws_subnet" "public" {
+  for_each = var.public_subnets
+
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnets["key1"].cidr
-  availability_zone       = var.azs["key1"]
+  cidr_block              = each.value.cidr
+  availability_zone       = each.value.az
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnets["key1"].name
+    Name = each.value.name
   }
 }
 
-resource "aws_subnet" "public_2" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnets["key2"].cidr
-  availability_zone       = var.azs["key2"]
-  map_public_ip_on_launch = true
+resource "aws_subnet" "private" {
+  for_each = var.private_subnets
 
-  tags = {
-    Name = var.public_subnets["key2"].name
-  }
-}
-
-resource "aws_subnet" "public_3" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnets["key3"].cidr
-  availability_zone       = var.azs["key3"]
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = var.public_subnets["key3"].name
-  }
-}
-
-resource "aws_subnet" "private_1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnets["key1"].cidr
-  availability_zone = var.azs["key1"]
+  cidr_block        = each.value.cidr
+  availability_zone = each.value.az
 
   tags = {
-    Name = var.private_subnets["key1"].name
-  }
-}
-
-resource "aws_subnet" "private_2" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnets["key2"].cidr
-  availability_zone = var.azs["key2"]
-
-  tags = {
-    Name = var.private_subnets["key2"].name
-  }
-}
-
-resource "aws_subnet" "private_3" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnets["key3"].cidr
-  availability_zone = var.azs["key3"]
-
-  tags = {
-    Name = var.private_subnets["key3"].name
+    Name = each.value.name
   }
 }
 
@@ -94,25 +56,17 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
-resource "aws_route_table_association" "public_subnet_assn_1" {
-  subnet_id      = aws_subnet.public_1.id
-  route_table_id = aws_route_table.public_route_table.id
-}
+resource "aws_route_table_association" "public_subnet_assns" {
+  for_each = aws_subnet.public
 
-resource "aws_route_table_association" "public_subnet_assn_2" {
-  subnet_id      = aws_subnet.public_2.id
-  route_table_id = aws_route_table.public_route_table.id
-}
-
-resource "aws_route_table_association" "public_subnet_assn_3" {
-  subnet_id      = aws_subnet.public_3.id
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.public_route_table.id
 }
 
 resource "aws_instance" "ec2_instance" {
   ami                    = var.instance_ami_id
   instance_type          = var.instance_type
-  subnet_id              = aws_subnet.public_1.id
+  subnet_id              = aws_subnet.public["key1"].id
   vpc_security_group_ids = ["${aws_security_group.code_challenge.id}"]
 
   tags = {

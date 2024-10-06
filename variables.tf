@@ -4,33 +4,28 @@ variable "region" {
   default     = "us-east-2"
 }
 
-variable "azs" {
-  type = map(string)
-  default = {
-    key1 = "us-east-2a"
-    key2 = "us-east-2b"
-    key3 = "us-east-2c"
-  }
-}
-
 variable "public_subnets" {
   type = map(object({
     name = string
     cidr = string
+    az   = string
   }))
 
   default = {
     key1 = {
       name = "Public 1"
       cidr = "10.0.224.0/24"
+      az   = "us-east-2a"
     }
     key2 = {
       name = "Public 2"
       cidr = "10.0.225.0/24"
+      az   = "us-east-2b"
     }
     key3 = {
       name = "Public 3"
       cidr = "10.0.226.0/24"
+      az   = "us-east-2c"
     }
   }
 }
@@ -39,20 +34,24 @@ variable "private_subnets" {
   type = map(object({
     name = string
     cidr = string
+    az   = string
   }))
 
   default = {
     key1 = {
       name = "Private 1"
       cidr = "10.0.1.0/24"
+      az   = "us-east-2a"
     }
     key2 = {
       name = "Private 2"
       cidr = "10.0.2.0/24"
+      az   = "us-east-2b"
     }
     key3 = {
       name = "Private 3"
       cidr = "10.0.3.0/24"
+      az   = "us-east-2c"
     }
   }
 }
